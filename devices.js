@@ -1489,6 +1489,16 @@ const devices = [
             execute(device, actions, callback);
         },
     },
+    // Texas Instruments
+    {
+        zigbeeModel: ['TI SampleLight'],
+        model: 'TI SampleLight',
+        vendor: 'Texas Instruments',
+        description: 'RGBW Light with Micro USB socket',
+        supports: generic.light_onoff_brightness_colortemp_colorxy().supports,
+        fromZigbee: generic.light_onoff_brightness_colortemp_colorxy().fromZigbee,
+        toZigbee: generic.light_onoff_brightness_colortemp_colorxy().toZigbee
+    },
 ];
 
 module.exports = devices;
