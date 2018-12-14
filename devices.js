@@ -1499,6 +1499,24 @@ const devices = [
         fromZigbee: generic.light_onoff_brightness_colortemp_colorxy().fromZigbee,
         toZigbee: generic.light_onoff_brightness_colortemp_colorxy().toZigbee
     },
+    {
+        zigbeeModel: ['CNT02W'],
+        model: 'CNT02W',
+        vendor: 'Ekotelecom-T',
+        description: 'Two channel impulse counter for water meter',
+        supports: 'Water metering',
+        fromZigbee: [fz.impulse_counter],
+        toZigbee:[]
+    },
+    {
+        zigbeeModel: ['RLY01'],
+        model: 'RLY01',
+        vendor: 'Ekotelecom-T',
+        description: 'Zigbee Relay',
+        supports: 'OnOff',
+        fromZigbee: [],
+        toZigbee:[tz.on_off]
+    }
 ];
 
 module.exports = devices;

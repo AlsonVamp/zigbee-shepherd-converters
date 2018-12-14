@@ -953,6 +953,14 @@ const converters = {
             };
         },
     },
+    impulse_counter: {
+        cid: 'seMetering',
+        type: 'attReport',
+        convert: (model, msg, publish, options) => {
+            const counter = msg.data.data.currentSummDelivered
+            return { counter: counter[0] * 4294967296 + counter[1] }
+        },
+    },
 
     // Ignore converters (these message dont need parsing).
     ignore_doorlock_change: {
