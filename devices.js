@@ -1516,6 +1516,15 @@ const devices = [
         supports: 'OnOff',
         fromZigbee: [],
         toZigbee:[tz.on_off]
+    },
+    {
+        zigbeeModel: ['ETT.SPRY01'],
+        model: 'ETT.SPRY01',
+        vendor: 'Ekotelecom-T',
+        description: 'Zigbee Dispenser',
+        supports: 'OnOff, Set Schedule, Battery, Level',
+        fromZigbee: [fz.generic_state, fz.generic_battery, fz.generic_level],
+        toZigbee:[tz.on_off]
     }
 ];
 

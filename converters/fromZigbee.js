@@ -543,6 +543,13 @@ const converters = {
             return {state: msg.data.data['onOff'] === 1 ? 'ON' : 'OFF'};
         },
     },
+    generic_level: {
+        cid: 'genLevelCtrl',
+        type: 'attReport',
+        convert: (model, msg, publish, options) => {
+            return {level: msg.data.data['currentLevel']};
+        },
+    },
     xiaomi_power: {
         cid: 'genAnalogInput',
         type: 'attReport',
