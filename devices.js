@@ -1522,9 +1522,19 @@ const devices = [
         model: 'ETT.SPRY01',
         vendor: 'Ekotelecom-T',
         description: 'Zigbee Dispenser',
-        supports: 'OnOff, Set Schedule, Battery, Level',
+        supports: 'OnOff, Set Schedule',
         fromZigbee: [fz.generic_state, fz.generic_battery, fz.generic_level],
-        toZigbee:[tz.on_off]
+        toZigbee:[tz.on_off],
+        configure: (ieeeAddr, shepherd, coordinator, callback) => {
+            const device = shepherd.find(ieeeAddr, 6);
+            const actions = [
+                (cb) => device.bind('genOnOff', coordinator, cb),
+                (cb) => device.bind('genLevelCtrl', coordinator, cb),
+                (cb) => device.bind('genPowerCfg', coordinator, cb),
+            ];
+
+            execute(device, actions, callback);
+        },
     }
 ];
 
