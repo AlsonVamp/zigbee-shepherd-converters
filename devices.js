@@ -6757,6 +6757,19 @@ const devices = [
         toZigbee: [tz.on_off, tz.light_color, tz.ignore_transition, tz.light_alert, tz.light_brightness_move,tz.light_brightness],
         fromZigbee: [fz.on_off, fz.brightness, fz.ignore_basic_report],
     },
+    {
+        zigbeeModel: ['ETT.CNT01W-D'],
+        model: 'ETT.CNT01W-D',
+        vendor: 'Ecotelecom-T',
+        description: 'Two channel impulse counter for water meter',
+        supports: 'Water metering',
+        fromZigbee: [fz.impulse_counter],
+        toZigbee: [],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(6), coordinatorEndpoint, ['seMetering']);
+            await bind(device.getEndpoint(7), coordinatorEndpoint, ['seMetering']);
+        },
+    },
 ];
 
 module.exports = devices.map((device) =>

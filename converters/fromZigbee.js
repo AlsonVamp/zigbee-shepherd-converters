@@ -3619,6 +3619,14 @@ const converters = {
             }
         },
     },
+    impulse_counter: {
+        cluster: 'seMetering',
+        type: ['attributeReport', 'readResponse'],
+        convert: (model, msg, publish, options) => {
+            const counter = msg.data.currentSummDelivered
+            return { counter: counter[0] * 4294967296 + counter[1] }
+        },
+    },
 
     // Ignore converters (these message dont need parsing).
     ignore_onoff_report: {
