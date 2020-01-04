@@ -6747,6 +6747,16 @@ const devices = [
             await legrand.pairing_security_event(type, data, device);
         },
     },
+
+    // Texas Instruments
+    {
+        zigbeeModel: ['TI SampleLight'],
+        model: 'TI SampleLight',
+        vendor: 'Texas Instruments',
+        description: 'RGBW Light with Micro USB socket',
+        toZigbee: [tz.on_off, tz.light_color, tz.ignore_transition, tz.light_alert, tz.light_brightness_move,tz.light_brightness],
+        fromZigbee: [fz.on_off, fz.brightness, fz.ignore_basic_report],
+    },
 ];
 
 module.exports = devices.map((device) =>
