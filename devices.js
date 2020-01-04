@@ -6783,6 +6783,30 @@ const devices = [
             await bind(device.getEndpoint(8), coordinatorEndpoint, ['msOccupancySensing']);
         },
     },
+    {
+        zigbeeModel: ['ETT.SWA1'],
+        model: 'ETT.SWA1',
+        vendor: 'Ecotelecom-T',
+        description: 'Water valve',
+        supports: 'on/off',
+        fromZigbee: [fz.on_off],
+        toZigbee: [tz.on_off],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(8), coordinatorEndpoint, ['genOnOff']);
+        },
+    },
+    {
+        zigbeeModel: ['ETT.LK01'],
+        model: 'ETT.LK01',
+        vendor: 'Ecotelecom-T',
+        description: 'Leakage sensor',
+        supports: 'off',
+        fromZigbee: [fz.on_off],
+        toZigbee: [],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(8), coordinatorEndpoint, ['genOnOff']);
+        },
+    },
 ];
 
 module.exports = devices.map((device) =>
