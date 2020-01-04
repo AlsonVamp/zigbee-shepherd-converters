@@ -6757,6 +6757,7 @@ const devices = [
         toZigbee: [tz.on_off, tz.light_color, tz.ignore_transition, tz.light_alert, tz.light_brightness_move,tz.light_brightness],
         fromZigbee: [fz.on_off, fz.brightness, fz.ignore_basic_report],
     },
+    // Ecotelecom-T
     {
         zigbeeModel: ['ETT.CNT01W-D'],
         model: 'ETT.CNT01W-D',
@@ -6768,6 +6769,18 @@ const devices = [
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(6), coordinatorEndpoint, ['seMetering']);
             await bind(device.getEndpoint(7), coordinatorEndpoint, ['seMetering']);
+        },
+    },
+    {
+        zigbeeModel: ['ETT.MV01'],
+        model: 'ETT.MV01',
+        vendor: 'Ecotelecom-T',
+        description: 'Occupancy sensor',
+        supports: 'Occupancy',
+        fromZigbee: [fz.occupancy],
+        toZigbee: [],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(8), coordinatorEndpoint, ['msOccupancySensing']);
         },
     },
 ];
