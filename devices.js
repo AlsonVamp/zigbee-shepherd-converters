@@ -6819,6 +6819,18 @@ const devices = [
             await bind(device.getEndpoint(6), coordinatorEndpoint, ['genOnOff']);
         },
     },
+    {
+        zigbeeModel: ['ETT.RLY01'],
+        model: 'ETT.RLY01',
+        vendor: 'Ecotelecom-T',
+        description: 'Zigbee Relay',
+        supports: 'OnOff',
+        fromZigbee: [fz.on_off],
+        toZigbee: [tz.on_off],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(6), coordinatorEndpoint, ['genOnOff']);
+        },
+    },
 ];
 
 module.exports = devices.map((device) =>
