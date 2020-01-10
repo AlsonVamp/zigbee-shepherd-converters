@@ -6807,6 +6807,18 @@ const devices = [
             await bind(device.getEndpoint(8), coordinatorEndpoint, ['genOnOff']);
         },
     },
+    {
+        zigbeeModel: ['ETT.BTN01'],
+        model: 'ETT.BTN01',
+        vendor: 'Ecotelecom-T',
+        description: 'Button',
+        supports: 'Toggle',
+        fromZigbee: [fz.on_off],
+        toZigbee: [tz.on_off],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(6), coordinatorEndpoint, ['genOnOff']);
+        },
+    },
 ];
 
 module.exports = devices.map((device) =>
