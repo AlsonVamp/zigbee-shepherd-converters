@@ -1528,6 +1528,32 @@ const converters = {
             await entity.write('manuSpecificLegrandDevices', payload, options.legrand);
         },
     },
+    ETT_SPRY_schedule: {
+        key: 'schedule',
+        convertSet: async (entity, key, value, meta) => {
+            const payload = {};
+            if (value.hasOwnProperty('schedule')) {
+                payload[0] = {value: utils.scheduleToOctetStr(value.schedule), type: 0x41};
+            }
+            if (value.hasOwnProperty('intensity')) {
+                payload[2] = {value: value.intensity, type: 0x20};
+            }
+            if (value.hasOwnProperty('intervals')) {
+                payload[1] = {value: utils.intervalsToOctetStr(value.intervals), type: 0x41};
+            }
+            return await entity.write('ettSprySchedule', payload, {
+                disableDefaultResponse: true,
+            });
+        },
+        convertGet: async (entity, key, meta) => {
+            const readResponse = await entity.read('ettSprySchedule', ['intervals', 'intensity', 'schedule'], {
+                disableDefaultResponse: true,
+            });
+            return {intervals: utils.bufferToTimeIntervals(readResponse.intervals),
+                intensity: readResponse.intensity,
+                schedule: utils.bufferToWeeklySchedule(readResponse.schedule)};
+        },
+    },
 
     /**
      * Ignore converters

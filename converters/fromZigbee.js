@@ -1,6 +1,7 @@
 'use strict';
 
 const common = require('./common');
+const utils = require('./utils');
 
 const clickLookup = {
     1: 'single',
@@ -3623,8 +3624,28 @@ const converters = {
         cluster: 'seMetering',
         type: ['attributeReport', 'readResponse'],
         convert: (model, msg, publish, options) => {
-            const counter = msg.data.currentSummDelivered
-            return { counter: counter[0] * 4294967296 + counter[1] }
+            const counter = msg.data.currentSummDelivered;
+            return {counter: counter[0] * 4294967296 + counter[1]};
+        },
+    },
+    ETT_SPRY_schedule: {
+        cluster: 'ettSprySchedule',
+        type: ['attributeReport', 'readResponse'],
+        convert: (model, msg, publish, options) => {
+            const res = {};
+            if (msg.data.hasOwnProperty('intervals')) {
+                res.intervals = utils.bufferToTimeIntervals(msg.data['intervals']);
+            }
+            if (msg.data.hasOwnProperty('schedule')) {
+                res.schedule = utils.bufferToWeeklySchedule(msg.data['schedule']);
+            }
+            if (msg.data.hasOwnProperty('intensity')) {
+                res.intensity = msg.data['intensity'];
+            }
+            if (msg.data.hasOwnProperty('enabled')) {
+                res.enabled = msg.data['enabled'];
+            }
+            return res;
         },
     },
 

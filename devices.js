@@ -6831,6 +6831,20 @@ const devices = [
             await bind(device.getEndpoint(6), coordinatorEndpoint, ['genOnOff']);
         },
     },
+    {
+        zigbeeModel: ['ETT.SPRY01'],
+        model: 'ETT.SPRY01',
+        vendor: 'Ekotelecom-T',
+        description: 'Zigbee Dispenser',
+        supports: 'OnOff, Set Schedule',
+        fromZigbee: [fz.generic_state, fz.generic_battery, fz.generic_level, fz.ETT_SPRY_schedule],
+        toZigbee: [tz.on_off, tz.ETT_SPRY_schedule],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(6), coordinatorEndpoint,
+                ['genOnOff', 'genLevelCtrl', 'genPowerCfg', 'ettSprySchedule']);
+        },
+
+    },
 ];
 
 module.exports = devices.map((device) =>
