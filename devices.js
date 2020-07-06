@@ -6837,7 +6837,7 @@ const devices = [
         vendor: 'Ekotelecom-T',
         description: 'Zigbee Dispenser',
         supports: 'OnOff, Set Schedule',
-        fromZigbee: [fz.generic_state, fz.generic_battery, fz.generic_level, fz.ETT_SPRY_schedule],
+        fromZigbee: [fz.on_off, fz.generic_battery, fz.generic_level, fz.ETT_SPRY_schedule],
         toZigbee: [tz.on_off, tz.ETT_SPRY_schedule],
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(6), coordinatorEndpoint,
