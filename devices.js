@@ -6834,7 +6834,7 @@ const devices = [
     {
         zigbeeModel: ['ETT.SPRY01'],
         model: 'ETT.SPRY01',
-        vendor: 'Ekotelecom-T',
+        vendor: 'Ecotelecom-T',
         description: 'Zigbee Dispenser',
         supports: 'OnOff, Set Schedule',
         fromZigbee: [fz.on_off, fz.generic_battery, fz.generic_level, fz.ETT_SPRY_schedule],
@@ -6844,6 +6844,21 @@ const devices = [
                 ['genOnOff', 'genLevelCtrl', 'genPowerCfg', 'ettSprySchedule']);
         },
 
+    },
+    {
+        zigbeeModel: ['ETT.THS01'],
+        model: 'ETT.THS01',
+        vendor: 'Ecotelecom-T',
+        description: 'Temperature and Humidity Sensor',
+        supports: 'Temperature, Humidity',
+        fromZigbee: [
+            fz.humidity, fz.temperature, fz.battery_200,
+        ],
+        toZigbee: [],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(8), coordinatorEndpoint, 
+                ['msTemperatureMeasurement', 'msRelativeHumidity']);
+        },
     },
 ];
 
