@@ -1870,6 +1870,13 @@ const converters = {
             }
         },
     },
+    generic_level: {
+        cluster: 'genLevelCtrl',
+        type: 'attReport',
+        convert: (model, msg, publish, options) => {
+            return {level: msg.data.data['currentLevel']};
+        },
+    },
     generic_battery_voltage: {
         cluster: 'genPowerCfg',
         type: ['attributeReport', 'readResponse'],
