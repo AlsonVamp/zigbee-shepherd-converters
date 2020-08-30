@@ -6790,7 +6790,7 @@ const devices = [
         description: 'Water valve',
         supports: 'on/off',
         fromZigbee: [fz.on_off],
-        toZigbee: [tz.on_off],
+        toZigbee: [tz.on_off, tz.ett_onWithTimedOff],
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(8), coordinatorEndpoint, ['genOnOff']);
         },
