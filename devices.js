@@ -6754,7 +6754,7 @@ const devices = [
         model: 'TI SampleLight',
         vendor: 'Texas Instruments',
         description: 'RGBW Light with Micro USB socket',
-        toZigbee: [tz.on_off, tz.light_color, tz.ignore_transition, tz.light_alert, tz.light_brightness_move,tz.light_brightness],
+        toZigbee: [tz.on_off, tz.light_color, tz.ignore_transition, tz.light_alert, tz.light_brightness_move, tz.light_brightness],
         fromZigbee: [fz.on_off, fz.brightness, fz.ignore_basic_report],
     },
     // Ecotelecom-T
@@ -6834,7 +6834,7 @@ const devices = [
     {
         zigbeeModel: ['ETT.SPRY01'],
         model: 'ETT.SPRY01',
-        vendor: 'Ekotelecom-T',
+        vendor: 'Ecotelecom-T',
         description: 'Zigbee Dispenser',
         supports: 'OnOff, Set Schedule',
         fromZigbee: [fz.on_off, fz.generic_battery, fz.generic_level, fz.ETT_SPRY_schedule],
@@ -6855,6 +6855,21 @@ const devices = [
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(1), coordinatorEndpoint, ['msTemperatureMeasurement', 'msRelativeHumidity']);
+        },
+    },
+    {
+        zigbeeModel: ['ETT.THS01'],
+        model: 'ETT.THS01',
+        vendor: 'Ecotelecom-T',
+        description: 'Temperature and Humidity Sensor',
+        supports: 'Temperature, Humidity',
+        fromZigbee: [
+            fz.humidity, fz.temperature, fz.battery_200,
+        ],
+        toZigbee: [],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(8), coordinatorEndpoint,
+                ['msTemperatureMeasurement', 'msRelativeHumidity']);
         },
     },
 ];

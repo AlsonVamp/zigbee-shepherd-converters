@@ -1886,6 +1886,13 @@ const converters = {
             }
         },
     },
+    generic_level: {
+        cid: 'genLevelCtrl',
+        type: 'attReport',
+        convert: (model, msg, publish, options) => {
+            return { level: msg.data.data['currentLevel'] };
+        },
+    },
     cmd_move: {
         cluster: 'genLevelCtrl',
         type: 'commandMove',
