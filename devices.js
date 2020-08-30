@@ -6845,6 +6845,18 @@ const devices = [
         },
 
     },
+    {
+        zigbeeModel: ['ETT.SMTA1'],
+        model: 'ETT.SMTA1',
+        vendor: 'Ecotelecom-T',
+        description: 'Soil moisture sensor',
+        supports: 'Humidity, Temperature',
+        fromZigbee: [fz.humidity, fz.temperature],
+        toZigbee: [],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(1), coordinatorEndpoint, ['msTemperatureMeasurement', 'msRelativeHumidity']);
+        },
+    },
 ];
 
 module.exports = devices.map((device) =>
