@@ -6808,6 +6808,18 @@ const devices = [
         },
     },
     {
+        zigbeeModel: ['ETT.LK02G'],
+        model: 'ETT.LK02G',
+        vendor: 'Ecotelecom-T',
+        description: 'Contact sensor',
+        supports: 'on/off',
+        fromZigbee: [fz.on_off, fz.battery_200],
+        toZigbee: [],
+        configure: async (device, coordinatorEndpoint) => {
+            await bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff', 'genPowerCfg']);
+        },
+    },
+    {
         zigbeeModel: ['ETT.BTN01'],
         model: 'ETT.BTN01',
         vendor: 'Ecotelecom-T',
@@ -6816,7 +6828,7 @@ const devices = [
         fromZigbee: [fz.on_off],
         toZigbee: [tz.on_off],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(6), coordinatorEndpoint, ['genOnOff']);
+            await bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
         },
     },
     {
