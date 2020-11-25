@@ -2928,6 +2928,12 @@ const converters = {
         },
     },
 
+    ett_onWithTimedOff: {
+        key: 'timedOn',
+        convertSet: async (entity, key, value, meta) => {
+            return await entity.command('genOnOff', 'onWithTimedOff', {ctrlbits: 0, ontime: value, offwaittime: 0});
+        },
+    },
     /**
      * Ignore converters
      */
