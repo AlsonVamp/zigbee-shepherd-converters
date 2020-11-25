@@ -15078,7 +15078,7 @@ const devices = [
         model: 'TI SampleLight',
         vendor: 'Texas Instruments',
         description: 'RGBW Light with Micro USB socket',
-        toZigbee: [tz.on_off, tz.light_color, tz.ignore_transition, tz.light_alert, tz.light_brightness_move,tz.light_brightness],
+        toZigbee: [tz.on_off, tz.light_color, tz.ignore_transition, tz.light_brightness_move, tz.light_brightness_step],
         fromZigbee: [fz.on_off, fz.brightness, fz.ignore_basic_report],
     },
     // Ecotelecom-T
@@ -15161,7 +15161,7 @@ const devices = [
         vendor: 'Ecotelecom-T',
         description: 'Zigbee Dispenser',
         supports: 'OnOff, Set Schedule',
-        fromZigbee: [fz.on_off, fz.generic_battery, fz.generic_level, fz.ETT_SPRY_schedule],
+        fromZigbee: [fz.on_off, fz.battery, fz.level, fz.ETT_SPRY_schedule],
         toZigbee: [tz.on_off, tz.ETT_SPRY_schedule],
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(6), coordinatorEndpoint,
