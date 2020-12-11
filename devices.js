@@ -15128,7 +15128,7 @@ const devices = [
         fromZigbee: [fz.on_off],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(8), coordinatorEndpoint, ['genOnOff']);
+            await bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
         },
     },
     {
