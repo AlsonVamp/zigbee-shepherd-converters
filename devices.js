@@ -15208,6 +15208,24 @@ const devices = [
                 ['msTemperatureMeasurement', 'msRelativeHumidity']);
         },
     },
+    {
+        zigbeeModel: ['ETT.CNT02AW'],
+        model: 'ETT.CNT02AW',
+        vendor: 'Ecotelecom-T',
+        description: 'Two channel impulse counter for water meter',
+        supports: 'Water metering',
+        fromZigbee: [fz.impulse_counter],
+        toZigbee: [tz.eco_counter2_settings],
+    },
+    {
+        zigbeeModel: ['ETT.CNT02AE'],
+        model: 'ETT.CNT02AE',
+        vendor: 'Ecotelecom-T',
+        description: 'Two channel impulse counter for electricity meter',
+        supports: 'Electricity metering',
+        fromZigbee: [fz.impulse_counter],
+        toZigbee: [tz.eco_counter2_settings],
+    },
 ];
 
 

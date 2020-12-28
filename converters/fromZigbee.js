@@ -5667,8 +5667,17 @@ const converters = {
         cluster: 'seMetering',
         type: ['attributeReport', 'readResponse'],
         convert: (model, msg, publish, options) => {
-            const counter = msg.data.currentSummDelivered;
-            return {counter: counter[0] * 4294967296 + counter[1]};
+            let result = {};
+            if (msg.data.hasOwnProperty('currentSummDelivered')) {
+                const counter = msg.data.currentSummDelivered;
+                result.counter = counter[0] * 4294967296 + counter[1];
+            }
+            if (msg.data.hasOwnProperty('multiplier')) {
+                result.counter2_settings ={
+                    coef: msg.data.multiplier
+                };
+            }
+            return result;
         },
     },
     ETT_SPRY_schedule: {

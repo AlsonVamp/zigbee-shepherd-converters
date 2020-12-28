@@ -3879,6 +3879,22 @@ const converters = {
             }
         },
     },
+    eco_counter2_settings: {
+        key: ['counter2_settings'],
+        convertSet: async (entity, key, value, meta) => {
+            let {value: v, coef: c} = value;
+            v = Math.round(v*c);
+            
+            await entity.write('seMetering', {'currentSummDelivered': [Math.floor(v/4294967296), v%4294967296]});
+            await entity.write('seMetering', {'multiplier': value.coef});
+
+            return value;
+        },
+        convertGet: async (entity, key, meta) => {
+            await entity.read('seMetering', ['currentSummDelivered']);
+            await entity.read('seMetering', ['multiplier']);
+        },
+    },
 
     // Not a converter, can be used by tests to clear the store.
     __clearStore__: () => {
