@@ -15088,7 +15088,7 @@ const devices = [
         vendor: 'Ecotelecom-T',
         description: 'Two channel impulse counter for water meter',
         supports: 'Water metering',
-        fromZigbee: [fz.impulse_counter],
+        fromZigbee: [fz.impulse_counter, fz.battery],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(6), coordinatorEndpoint, ['seMetering']);
@@ -15101,7 +15101,7 @@ const devices = [
         vendor: 'Ecotelecom-T',
         description: 'Occupancy sensor',
         supports: 'Occupancy',
-        fromZigbee: [fz.occupancy],
+        fromZigbee: [fz.occupancy, fz.battery],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(8), coordinatorEndpoint, ['msOccupancySensing']);
@@ -15125,7 +15125,7 @@ const devices = [
         vendor: 'Ecotelecom-T',
         description: 'Leakage sensor',
         supports: 'off',
-        fromZigbee: [fz.on_off],
+        fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
@@ -15137,7 +15137,7 @@ const devices = [
         vendor: 'Ecotelecom-T',
         description: 'Contact sensor',
         supports: 'on/off',
-        fromZigbee: [fz.on_off, fz.battery_200],
+        fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff', 'genPowerCfg']);
@@ -15149,7 +15149,7 @@ const devices = [
         vendor: 'Ecotelecom-T',
         description: 'Button',
         supports: 'Toggle',
-        fromZigbee: [fz.on_off],
+        fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [tz.on_off],
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
@@ -15187,7 +15187,7 @@ const devices = [
         vendor: 'Ecotelecom-T',
         description: 'Soil moisture sensor',
         supports: 'Humidity, Temperature',
-        fromZigbee: [fz.humidity, fz.temperature],
+        fromZigbee: [fz.humidity, fz.temperature, fz.battery],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
             await bind(device.getEndpoint(1), coordinatorEndpoint, ['msTemperatureMeasurement', 'msRelativeHumidity']);
@@ -15200,7 +15200,7 @@ const devices = [
         description: 'Temperature and Humidity Sensor',
         supports: 'Temperature, Humidity',
         fromZigbee: [
-            fz.humidity, fz.temperature, fz.battery_200,
+            fz.humidity, fz.temperature, fz.battery,
         ],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
