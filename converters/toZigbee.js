@@ -3880,6 +3880,24 @@ const converters = {
         },
     },
 
+    ett_irtosot_frame: {
+        key: ['priorityArray'],
+        convertSet: async (entity, key, value, meta) => {
+            const payload = value.concat([0, 0, 0, 0, 0, 0, 0, 0]).map( el => {
+                let buf = Buffer.alloc[2].writeUInt16BE(el);
+                return {
+                    elementType: 'BUFFER3',
+                    elements: [1].concat([])
+                }
+            });
+            
+            await entity.write('genMultistateOutput', {priorityArray: payload});
+        },
+        convertGet: async (entity, key, meta) => {
+            await entity.read('genMultistateOutput', ['priorityArray']);
+        },
+    }, 
+
     // Not a converter, can be used by tests to clear the store.
     __clearStore__: () => {
         for (const key of Object.keys(store)) {

@@ -15208,6 +15208,17 @@ const devices = [
                 ['msTemperatureMeasurement', 'msRelativeHumidity']);
         },
     },
+
+    {
+        zigbeeModel: ['ETT.IRTOSOTA1'],
+        model: 'ETT.IRTOSOTA1',
+        vendor: 'Ecotelecom-T',
+        description: 'Ir remote controle',
+        supports: 'MultistateValue priority array',
+        fromZigbee: [],
+        toZigbee: [tz.ett_irtosot_frame],
+        configure: async (device, coordinatorEndpoint) => {},
+    },
 ];
 
 
