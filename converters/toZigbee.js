@@ -3884,10 +3884,10 @@ const converters = {
         key: ['priorityArray'],
         convertSet: async (entity, key, value, meta) => {
             const payload = value.concat([0, 0, 0, 0, 0, 0, 0, 0]).map( el => {
-                let buf = Buffer.alloc[2].writeUInt16BE(el);
+
                 return {
-                    elementType: 'BUFFER3',
-                    elements: [1].concat([])
+                    elementType: 'BUFFER4',
+                    elements: [3, 1, el / 256, el % 256]
                 }
             });
             
