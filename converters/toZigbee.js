@@ -3881,20 +3881,12 @@ const converters = {
     },
 
     ett_irtosot_frame: {
-        key: ['priorityArray'],
+        key: ['irFrame'],
         convertSet: async (entity, key, value, meta) => {
-            const payload = value.concat([0, 0, 0, 0, 0, 0, 0, 0]).map( el => {
-
-                return {
-                    elementType: 'BUFFER4',
-                    elements: [3, 1, el / 256, el % 256]
-                }
-            });
-            
-            await entity.write('genMultistateOutput', {priorityArray: payload});
+            await entity.write('genMultistateOutput', {0x200: {value: value, type: 0x41}});
         },
         convertGet: async (entity, key, meta) => {
-            await entity.read('genMultistateOutput', ['priorityArray']);
+            await entity.read('genMultistateOutput', [0x200]);
         },
     }, 
 
