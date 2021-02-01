@@ -15210,7 +15210,7 @@ const devices = [
     },
     {
         zigbeeModel: ['ETT.CNT02AW'],
-        model: 'ETT.CNT02AW',
+        model: 'ETT.CNT02W',
         vendor: 'Ecotelecom-T',
         description: 'Two channel impulse counter for water meter',
         supports: 'Water metering',
@@ -15218,7 +15218,7 @@ const devices = [
         toZigbee: [tz.eco_counter2_settings],
     },
     {
-        zigbeeModel: ['ETT.CNT02AE'],
+        zigbeeModel: ['ETT.CNT02E'],
         model: 'ETT.CNT02AE',
         vendor: 'Ecotelecom-T',
         description: 'Two channel impulse counter for electricity meter',
