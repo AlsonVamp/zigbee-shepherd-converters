@@ -15209,7 +15209,7 @@ const devices = [
         },
     },
     {
-        zigbeeModel: ['ETT.CNT02AW'],
+        zigbeeModel: ['ETT.CNT02W'],
         model: 'ETT.CNT02W',
         vendor: 'Ecotelecom-T',
         description: 'Two channel impulse counter for water meter',
