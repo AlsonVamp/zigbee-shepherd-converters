@@ -2,6 +2,7 @@ const index = require('../index');
 const devices = require('../devices');
 const exposes = require('../lib/exposes');
 const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
+const equals = require('fast-deep-equal/es6');
 
 function containsOnly(array1, array2){
     for (const elem of array2) {
@@ -26,12 +27,12 @@ describe('index.js', () => {
 
     it('Legacy: Find by zigbeeModel with strange characters 2', () => {
         const device = index.findByZigbeeModel('lumi.sensor_86sw1\u0000lu');
-        expect(device.model).toBe('WXKG03LM')
+        expect(device.model).toBe('WXKG03LM_rev1')
     });
 
     it('Legacy: Find by zigbeeModel with strange characters 3', () => {
         const device = index.findByZigbeeModel('lumi.sensor_86sw1');
-        expect(device.model).toBe('WXKG03LM')
+        expect(device.model).toBe('WXKG03LM_rev1')
     });
 
     it('Legacy: Find by zigbeeModel without strange characters', () => {
@@ -172,6 +173,7 @@ describe('index.js', () => {
 
         let foundZigbeeModels = [];
         let foundModels = [];
+        let foundFingerprints = [];
 
         devices.forEach((device) => {
             // Verify device attributes.
@@ -183,6 +185,10 @@ describe('index.js', () => {
 
             if (!device.hasOwnProperty('zigbeeModel') && !device.hasOwnProperty('fingerprint')) {
                 throw new Error(`'${device.model}' has no zigbeeModel or fingerprint`);
+            }
+
+            if (device.fromZigbee.includes(undefined)) {
+                console.log(device.model);
             }
 
             expect(device.fromZigbee).not.toContain(undefined);
@@ -239,6 +245,19 @@ describe('index.js', () => {
                 throw new Error(`Duplicate model ${device.model}`)
             }
 
+            // Check for duplicate foundFingerprints
+            if (device.fingerprint) {
+                for (const fingerprint of device.fingerprint) {
+                    for (const foundFingerprint of foundFingerprints) {
+                        if (equals(foundFingerprint, fingerprint)) {
+                            throw new Error(`Duplicate fingerprint for ${device.model}: ${JSON.stringify(fingerprint)}`);
+                        }
+                    }
+
+                    foundFingerprints.push(fingerprint);
+                }
+            }
+
             // Verify meta
             if (device.configure && (!device.meta || !device.meta.configureKey)) {
                 throw new Error(`${device.model} requires configureKey because it has configure`)
@@ -251,7 +270,7 @@ describe('index.js', () => {
             }
 
             if (device.meta) {
-                containsOnly(['disableActionGroup', 'configureKey', 'multiEndpoint', 'applyRedFix', 'disableDefaultResponse', 'enhancedHue', 'timeout', 'supportsHueAndSaturation', 'battery', 'coverInverted', 'turnsOffAtBrightness1', 'pinCodeCount', 'tuyaThermostatSystemMode', 'tuyaThermostatPreset', 'commandArmIncludeTransaction', 'thermostat'], Object.keys(device.meta));
+                containsOnly(['disableActionGroup', 'configureKey', 'multiEndpoint', 'applyRedFix', 'disableDefaultResponse', 'enhancedHue', 'timeout', 'supportsHueAndSaturation', 'battery', 'coverInverted', 'turnsOffAtBrightness1', 'pinCodeCount', 'tuyaThermostatSystemMode', 'tuyaThermostatPreset', 'tuyaThermostatPresetToSystemMode', 'thermostat'], Object.keys(device.meta));
             }
 
             if (device.zigbeeModel) {
@@ -264,13 +283,22 @@ describe('index.js', () => {
 
     it('Verify addDeviceDefinition', () => {
         const mockZigbeeModel = 'my-mock-device';
-        const mockDevice = {
-            zigbeeModel: [mockZigbeeModel],
-            model: 'mock-model'
-        };
+        let mockDevice = {};
         const undefinedDevice = index.findByZigbeeModel(mockDevice.model);
         expect(undefinedDevice).toBeNull();
         const beforeAdditionDeviceCount = index.devices.length;
+        expect(()=> index.addDeviceDefinition(mockDevice)).toThrow("Converter field model is undefined");
+        mockDevice.model = 'mock-model';
+        expect(()=> index.addDeviceDefinition(mockDevice)).toThrow("Converter field vendor is undefined");
+        mockDevice = {
+            model: 'mock-model',
+            vendor: 'dummy',
+            zigbeeModel: [mockZigbeeModel],
+            description: 'dummy',
+            fromZigbee: [],
+            toZigbee: [],
+            exposes: []
+        };
         index.addDeviceDefinition(mockDevice);
         expect(beforeAdditionDeviceCount + 1).toBe(index.devices.length);
         const device = index.findByZigbeeModel(mockZigbeeModel);
@@ -328,5 +356,37 @@ describe('index.js', () => {
         };
         const actual = exposes.presets.light_brightness_colorxy().withEndpoint('rgb');
         expect(expected).toStrictEqual(deepClone(actual));
+    });
+
+    it('Exposes access matches toZigbee', () => {
+        devices.forEach((device) => {
+            if (device.exposes) {
+                const toCheck = [];
+                for (const expose of device.exposes) {
+                    if (expose.hasOwnProperty('access')) {
+                        toCheck.push(expose)
+                    } else if (expose.features && expose.type !== 'composite') {
+                        toCheck.push(...expose.features.filter(e => e.hasOwnProperty('access')));
+                    }
+                }
+
+                for (const expose of toCheck) {
+                    let property = expose.property;
+                    if (expose.endpoint && expose.property.length > expose.endpoint.length) {
+                        property = expose.property.slice(0, (expose.endpoint.length + 1) * -1);
+                    }
+
+                    const toZigbee = device.toZigbee.find(item => item.key.includes(property));
+
+                    if ((expose.access & exposes.access.SET) != (toZigbee && toZigbee.convertSet ? exposes.access.SET : 0)) {
+                        throw new Error(`${device.model} - ${property}, supports set: ${!!(toZigbee && toZigbee.convertSet)}`);
+                    }
+
+                    if ((expose.access & exposes.access.GET) != (toZigbee && toZigbee.convertGet ? exposes.access.GET : 0)) {
+                        throw new Error(`${device.model} - ${property}, supports get: ${!!(toZigbee && toZigbee.convertGet)}`);
+                    }
+                }
+            }
+        });
     });
 });
