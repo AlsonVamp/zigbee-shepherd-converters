@@ -15811,6 +15811,7 @@ const devices = [
         model: 'TI SampleLight',
         vendor: 'Texas Instruments',
         description: 'RGBW Light with Micro USB socket',
+        exposes: [],
         toZigbee: [tz.on_off, tz.light_color, tz.ignore_transition, tz.light_brightness_move, tz.light_brightness_step],
         fromZigbee: [fz.on_off, fz.brightness, fz.ignore_basic_report],
     },
@@ -15820,10 +15821,11 @@ const devices = [
         model: 'ETT.CNT01W-D',
         vendor: 'Ecotelecom-T',
         description: 'Two channel impulse counter for water meter',
-        supports: 'Water metering',
+        exposes: [],
         fromZigbee: [fz.impulse_counter, fz.battery],
         toZigbee: [],
-        configure: async (device, coordinatorEndpoint) => {
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(6), coordinatorEndpoint, ['seMetering']);
             await reporting.bind(device.getEndpoint(7), coordinatorEndpoint, ['seMetering']);
         },
@@ -15833,10 +15835,11 @@ const devices = [
         model: 'ETT.MV01',
         vendor: 'Ecotelecom-T',
         description: 'Occupancy sensor',
-        supports: 'Occupancy',
+        exposes: [],
         fromZigbee: [fz.occupancy, fz.battery],
         toZigbee: [],
-        configure: async (device, coordinatorEndpoint) => {
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(8), coordinatorEndpoint, ['msOccupancySensing']);
         },
     },
@@ -15845,10 +15848,11 @@ const devices = [
         model: 'ETT.SWA1',
         vendor: 'Ecotelecom-T',
         description: 'Water valve',
-        supports: 'on/off',
+        exposes: [],
         fromZigbee: [fz.on_off],
         toZigbee: [tz.on_off, tz.ett_onWithTimedOff],
-        configure: async (device, coordinatorEndpoint) => {
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(8), coordinatorEndpoint, ['genOnOff']);
         },
     },
@@ -15857,10 +15861,11 @@ const devices = [
         model: 'ETT.LK01',
         vendor: 'Ecotelecom-T',
         description: 'Leakage sensor',
-        supports: 'off',
+        exposes: [],
         fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [],
-        configure: async (device, coordinatorEndpoint) => {
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
         },
     },
@@ -15869,10 +15874,11 @@ const devices = [
         model: 'ETT.LK02G',
         vendor: 'Ecotelecom-T',
         description: 'Contact sensor',
-        supports: 'on/off',
+        exposes: [],
         fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [],
-        configure: async (device, coordinatorEndpoint) => {
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff', 'genPowerCfg']);
         },
     },
@@ -15881,10 +15887,11 @@ const devices = [
         model: 'ETT.BTN01',
         vendor: 'Ecotelecom-T',
         description: 'Button',
-        supports: 'Toggle',
+        exposes: [],
         fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [tz.on_off],
-        configure: async (device, coordinatorEndpoint) => {
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
         },
     },
@@ -15893,10 +15900,11 @@ const devices = [
         model: 'ETT.RLY01',
         vendor: 'Ecotelecom-T',
         description: 'Zigbee Relay',
-        supports: 'OnOff',
+        exposes: [],
         fromZigbee: [fz.on_off],
         toZigbee: [tz.on_off],
-        configure: async (device, coordinatorEndpoint) => {
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(6), coordinatorEndpoint, ['genOnOff']);
         },
     },
@@ -15905,10 +15913,11 @@ const devices = [
         model: 'ETT.SPRY01',
         vendor: 'Ecotelecom-T',
         description: 'Zigbee Dispenser',
-        supports: 'OnOff, Set Schedule',
-        fromZigbee: [fz.on_off, fz.battery, fz.level, fz.ETT_SPRY_schedule],
+        exposes: [],
+        fromZigbee: [fz.on_off, fz.battery, fz.brightness, fz.ETT_SPRY_schedule],
         toZigbee: [tz.on_off, tz.ETT_SPRY_schedule],
-        configure: async (device, coordinatorEndpoint) => {
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(6), coordinatorEndpoint,
                 ['genOnOff', 'genLevelCtrl', 'genPowerCfg', 'ettSprySchedule']);
         },
@@ -15919,10 +15928,11 @@ const devices = [
         model: 'ETT.SMTA1',
         vendor: 'Ecotelecom-T',
         description: 'Soil moisture sensor',
-        supports: 'Humidity, Temperature',
+        exposes: [],
         fromZigbee: [fz.humidity, fz.temperature, fz.battery],
         toZigbee: [],
-        configure: async (device, coordinatorEndpoint) => {
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['msTemperatureMeasurement', 'msRelativeHumidity']);
         },
     },
@@ -15931,12 +15941,13 @@ const devices = [
         model: 'ETT.THS01',
         vendor: 'Ecotelecom-T',
         description: 'Temperature and Humidity Sensor',
-        supports: 'Temperature, Humidity',
+        exposes: [],
         fromZigbee: [
             fz.humidity, fz.temperature, fz.battery,
         ],
         toZigbee: [],
-        configure: async (device, coordinatorEndpoint) => {
+        meta: {configureKey: 1},
+        configure: async (device, coordinatorEndpoint, logger) => {
             await reporting.bind(device.getEndpoint(8), coordinatorEndpoint,
                 ['msTemperatureMeasurement', 'msRelativeHumidity']);
         },

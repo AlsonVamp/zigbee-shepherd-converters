@@ -2970,7 +2970,7 @@ const converters = {
         },
     },
     ETT_SPRY_schedule: {
-        key: 'schedule',
+        key: ['schedule'],
         convertSet: async (entity, key, value, meta) => {
             const payload = {};
             if (value.hasOwnProperty('schedule')) {
@@ -2996,7 +2996,7 @@ const converters = {
         },
     },
     ett_onWithTimedOff: {
-        key: 'timedOn',
+        key: ['timedOn'],
         convertSet: async (entity, key, value, meta) => {
             return await entity.command('genOnOff', 'onWithTimedOff', {ctrlbits: 0, ontime: value, offwaittime: 0});
         },
