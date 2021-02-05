@@ -15816,17 +15816,22 @@ const devices = [
     },
     // Ecotelecom-T
     {
-        zigbeeModel: ['ETT.CNT01W-D'],
-        model: 'ETT.CNT01W-D',
+        zigbeeModel: ['ETT.CNT02W'],
+        model: 'ETT.CNT02W',
         vendor: 'Ecotelecom-T',
         description: 'Two channel impulse counter for water meter',
         supports: 'Water metering',
-        fromZigbee: [fz.impulse_counter, fz.battery],
-        toZigbee: [],
-        configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(6), coordinatorEndpoint, ['seMetering']);
-            await bind(device.getEndpoint(7), coordinatorEndpoint, ['seMetering']);
-        },
+        fromZigbee: [fz.metering, fz.battery],
+        toZigbee: [ett_cnt],
+    },
+    {
+        zigbeeModel: ['ETT.CNT02E'],
+        model: 'ETT.CNT02E',
+        vendor: 'Ecotelecom-T',
+        description: 'Two channel impulse counter for electricity meter',
+        supports: 'Electricity metering',
+        fromZigbee: [fz.metering, fz.battery],
+        toZigbee: [tz.ett_cnt]
     },
     {
         zigbeeModel: ['ETT.MV01'],

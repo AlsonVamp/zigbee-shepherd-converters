@@ -3001,6 +3001,23 @@ const converters = {
             return await entity.command('genOnOff', 'onWithTimedOff', {ctrlbits: 0, ontime: value, offwaittime: 0});
         },
     },
+    ett_cnt: {
+        key: 'counter_settings',
+        convertSet: async (entity, key, value, meta) => {
+            let {value: v, coef: c} = value;
+            v = Math.floor(v*c); // coef less 10 invalid, precition of value must equal 1/10
+
+            await entity.write('seMetering', {
+                'currentSummDelivered': [Math.floor(v/4294967296), v%4294967296], 
+                'multiplier': c
+            });
+
+            return value;
+        },
+        convertGet: async (entity, key, meta) => {
+            await entity.read('seMetering', ['currentSummDelivered', 'multiplier']);
+        },
+    },
     tint_scene: {
         key: ['tint_scene'],
         convertSet: async (entity, key, value, meta) => {
