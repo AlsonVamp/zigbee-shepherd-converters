@@ -15824,8 +15824,8 @@ const devices = [
         fromZigbee: [fz.impulse_counter, fz.battery],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(6), coordinatorEndpoint, ['seMetering']);
-            await bind(device.getEndpoint(7), coordinatorEndpoint, ['seMetering']);
+            await reporting.bind(device.getEndpoint(6), coordinatorEndpoint, ['seMetering']);
+            await reporting.bind(device.getEndpoint(7), coordinatorEndpoint, ['seMetering']);
         },
     },
     {
@@ -15837,7 +15837,7 @@ const devices = [
         fromZigbee: [fz.occupancy, fz.battery],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(8), coordinatorEndpoint, ['msOccupancySensing']);
+            await reporting.bind(device.getEndpoint(8), coordinatorEndpoint, ['msOccupancySensing']);
         },
     },
     {
@@ -15849,7 +15849,7 @@ const devices = [
         fromZigbee: [fz.on_off],
         toZigbee: [tz.on_off, tz.ett_onWithTimedOff],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(8), coordinatorEndpoint, ['genOnOff']);
+            await reporting.bind(device.getEndpoint(8), coordinatorEndpoint, ['genOnOff']);
         },
     },
     {
@@ -15861,7 +15861,7 @@ const devices = [
         fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
+            await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
         },
     },
     {
@@ -15873,7 +15873,7 @@ const devices = [
         fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff', 'genPowerCfg']);
+            await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff', 'genPowerCfg']);
         },
     },
     {
@@ -15885,7 +15885,7 @@ const devices = [
         fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [tz.on_off],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
+            await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
         },
     },
     {
@@ -15897,7 +15897,7 @@ const devices = [
         fromZigbee: [fz.on_off],
         toZigbee: [tz.on_off],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(6), coordinatorEndpoint, ['genOnOff']);
+            await reporting.bind(device.getEndpoint(6), coordinatorEndpoint, ['genOnOff']);
         },
     },
     {
@@ -15909,7 +15909,7 @@ const devices = [
         fromZigbee: [fz.on_off, fz.battery, fz.level, fz.ETT_SPRY_schedule],
         toZigbee: [tz.on_off, tz.ETT_SPRY_schedule],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(6), coordinatorEndpoint,
+            await reporting.bind(device.getEndpoint(6), coordinatorEndpoint,
                 ['genOnOff', 'genLevelCtrl', 'genPowerCfg', 'ettSprySchedule']);
         },
 
@@ -15923,7 +15923,7 @@ const devices = [
         fromZigbee: [fz.humidity, fz.temperature, fz.battery],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(1), coordinatorEndpoint, ['msTemperatureMeasurement', 'msRelativeHumidity']);
+            await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['msTemperatureMeasurement', 'msRelativeHumidity']);
         },
     },
     {
@@ -15937,7 +15937,7 @@ const devices = [
         ],
         toZigbee: [],
         configure: async (device, coordinatorEndpoint) => {
-            await bind(device.getEndpoint(8), coordinatorEndpoint,
+            await reporting.bind(device.getEndpoint(8), coordinatorEndpoint,
                 ['msTemperatureMeasurement', 'msRelativeHumidity']);
         },
     },
