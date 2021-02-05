@@ -2891,9 +2891,9 @@ const converters = {
                 let endpoint = {'S1': 2, 'S2': 3, 'D1': 2, 'J1': 2, 'C4': 1}[meta.mapped.model];
                 // default group id
                 let groupId = 0;
-                
+
                 const templates = Array.isArray(value.input_action_templates) ? value.input_action_templates :
-                [value.input_action_templates];
+                    [value.input_action_templates];
                 let resultingInputActions = [];
                 for (const template of templates) {
                     const templateType = templateTypes[template.type];
@@ -2901,7 +2901,7 @@ const converters = {
                         throw new Error(`input_action_templates: Template type '${template.type}' is not valid ` +
                         `(valid types: ${Object.keys(templateTypes)})`);
                     }
-                    
+
                     if (template.hasOwnProperty('input')) {
                         input = template.input;
                     }
@@ -2912,7 +2912,7 @@ const converters = {
                     if (templateType.cover && meta.mapped.model === 'C4' && endpoint < 5) {
                         endpoint += 4;
                     }
-                    
+
                     let inputActions;
                     if (!templateType.doubleInputs) {
                         if (!templateType.scene) {
@@ -2927,50 +2927,50 @@ const converters = {
                                 groupId = template.group_id;
                             }
                             inputActions = templateType.getInputActions(input, endpoint, groupId, template.scene_id);
-                            
+
                             if (template.hasOwnProperty('scene_id_2')) {
                                 if (template.hasOwnProperty('group_id_2')) {
                                     groupId = template.group_id_2;
                                 }
                                 inputActions = inputActions.concat(templateType.getInputActions2(input, endpoint, groupId,
                                     template.scene_id_2));
-                                }
                             }
-                        } else {
-                            // double inputs
-                            input = template.hasOwnProperty('inputs') ? template.inputs : [input, input + 1];
-                            inputActions = templateType.getInputActions(input, endpoint, template);
                         }
-                        resultingInputActions = resultingInputActions.concat(inputActions);
-                        
-                        meta.logger.warn(`ubisys: Using input(s) ${input} and endpoint ${endpoint} for '${template.type}'.`);
-                        // input might by now be an array (in case of double inputs)
-                        input = (Array.isArray(input) ? Math.max(...input) : input) + 1;
-                        endpoint += 1;
+                    } else {
+                        // double inputs
+                        input = template.hasOwnProperty('inputs') ? template.inputs : [input, input + 1];
+                        inputActions = templateType.getInputActions(input, endpoint, template);
                     }
-                    
-                    meta.logger.debug(`ubisys: input_actions to be sent to '${meta.options.friendlyName}': ` +
-                    JSON.stringify(resultingInputActions));
-                    await devMgmtEp.write('manuSpecificUbisysDeviceSetup',
-                    {'inputActions': {elementType: 'octetStr', elements: resultingInputActions}});
+                    resultingInputActions = resultingInputActions.concat(inputActions);
+
+                    meta.logger.warn(`ubisys: Using input(s) ${input} and endpoint ${endpoint} for '${template.type}'.`);
+                    // input might by now be an array (in case of double inputs)
+                    input = (Array.isArray(input) ? Math.max(...input) : input) + 1;
+                    endpoint += 1;
                 }
-                
-                // re-read effective settings and dump them to the log
-                converters.ubisys_device_setup.convertGet(entity, key, meta);
-            },
-            
-            convertGet: async (entity, key, meta) => {
-                const log = (dataRead) => {
-                    meta.logger.warn(
-                        `ubisys: Device setup read for '${meta.options.friendlyName}': ${JSON.stringify(utils.toSnakeCase(dataRead))}`);
-                    };
-                    const devMgmtEp = meta.device.getEndpoint(232);
-                    log(await devMgmtEp.read('manuSpecificUbisysDeviceSetup', ['inputConfigurations']));
-                    log(await devMgmtEp.read('manuSpecificUbisysDeviceSetup', ['inputActions']));
-                },
+
+                meta.logger.debug(`ubisys: input_actions to be sent to '${meta.options.friendlyName}': ` +
+                    JSON.stringify(resultingInputActions));
+                await devMgmtEp.write('manuSpecificUbisysDeviceSetup',
+                    {'inputActions': {elementType: 'octetStr', elements: resultingInputActions}});
+            }
+
+            // re-read effective settings and dump them to the log
+            converters.ubisys_device_setup.convertGet(entity, key, meta);
+        },
+
+        convertGet: async (entity, key, meta) => {
+            const log = (dataRead) => {
+                meta.logger.warn(
+                    `ubisys: Device setup read for '${meta.options.friendlyName}': ${JSON.stringify(utils.toSnakeCase(dataRead))}`);
+            };
+            const devMgmtEp = meta.device.getEndpoint(232);
+            log(await devMgmtEp.read('manuSpecificUbisysDeviceSetup', ['inputConfigurations']));
+            log(await devMgmtEp.read('manuSpecificUbisysDeviceSetup', ['inputActions']));
+        },
     },
     ETT_SPRY_schedule: {
-                key: 'schedule',
+        key: ['schedule'],
         convertSet: async (entity, key, value, meta) => {
             const payload = {};
             if (value.hasOwnProperty('schedule')) {
@@ -2993,10 +2993,10 @@ const converters = {
             return {intervals: ett.bufferToTimeIntervals(readResponse.intervals),
                 intensity: readResponse.intensity,
                 schedule: ett.bufferToWeeklySchedule(readResponse.schedule)};
-            },
+        },
     },
     ett_onWithTimedOff: {
-        key: 'timedOn',
+        key: ['timedOn'],
         convertSet: async (entity, key, value, meta) => {
             return await entity.command('genOnOff', 'onWithTimedOff', {ctrlbits: 0, ontime: value, offwaittime: 0});
         },

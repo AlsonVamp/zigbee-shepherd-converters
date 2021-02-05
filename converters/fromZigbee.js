@@ -4312,7 +4312,7 @@ const converters = {
     impulse_counter: {
         cluster: 'seMetering',
         type: ['attributeReport', 'readResponse'],
-        convert: (model, msg, publish, options) => {
+        convert: (model, msg, publish, options, meta) => {
             const counter = msg.data.currentSummDelivered;
             return {counter: counter[0] * 4294967296 + counter[1]};
         },
@@ -4320,7 +4320,7 @@ const converters = {
     ETT_SPRY_schedule: {
         cluster: 'ettSprySchedule',
         type: ['attributeReport', 'readResponse'],
-        convert: (model, msg, publish, options) => {
+        convert: (model, msg, publish, options, meta) => {
             const res = {};
             if (msg.data.hasOwnProperty('intervals')) {
                 res.intervals = ett.bufferToTimeIntervals(msg.data['intervals']);
