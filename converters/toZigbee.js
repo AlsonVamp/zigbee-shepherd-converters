@@ -3004,18 +3004,23 @@ const converters = {
     ett_cnt: {
         key: 'counter_settings',
         convertSet: async (entity, key, value, meta) => {
+            const f = x => ( (x.toString().includes('.')) ? (x.toString().split('.').pop().length) : (0) );
             let {value: v, coef: c} = value;
-            v = Math.floor(v*c); // coef less 10 invalid, precition of value must equal 1/10
+            const _c = +(1/c).toFixed(6)
+            v = Math.floor(v/(_c));
+            const div = Math.pow(10, f(_c));
+            const mul = (_c)*div;
 
             await entity.write('seMetering', {
                 'currentSummDelivered': [Math.floor(v/4294967296), v%4294967296], 
-                'multiplier': c
+                'multiplier': mul,
+                'divisor': div
             });
 
             return value;
         },
         convertGet: async (entity, key, meta) => {
-            await entity.read('seMetering', ['currentSummDelivered', 'multiplier']);
+            await entity.read('seMetering', ['currentSummDelivered', 'multiplier', 'divisor']);
         },
     },
     tint_scene: {
