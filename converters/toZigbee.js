@@ -3008,7 +3008,8 @@ const converters = {
             v = Math.floor(v*c);
             await entity.write('seMetering', {
                 'currentSummDelivered': [Math.floor(v/4294967296), v%4294967296], 
-                'divisor': c
+                'divisor': c,
+                'multiplier': 1
             });
 
             return value;
