@@ -3004,17 +3004,11 @@ const converters = {
     ett_cnt: {
         key: 'counter_settings',
         convertSet: async (entity, key, value, meta) => {
-            const f = x => ( (x.toString().includes('.')) ? (x.toString().split('.').pop().length) : (0) );
             let {value: v, coef: c} = value;
-            const _c = +(1/c).toFixed(6)
-            v = Math.floor(v/(_c));
-            const div = Math.pow(10, f(_c));
-            const mul = (_c)*div;
-
+            v = Math.floor(v*c);
             await entity.write('seMetering', {
                 'currentSummDelivered': [Math.floor(v/4294967296), v%4294967296], 
-                'multiplier': mul,
-                'divisor': div
+                'divisor': c
             });
 
             return value;
