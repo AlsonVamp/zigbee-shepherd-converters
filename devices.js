@@ -15825,7 +15825,7 @@ const devices = [
         fromZigbee: [fz.metering, fz.battery],
         toZigbee: [tz.ett_cnt],
         exposes: [],
-        meta: {configureKey: 1}
+        meta: {configureKey: 1},
     },
     {
         zigbeeModel: ['ETT.CNT02E'],
