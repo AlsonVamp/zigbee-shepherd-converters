@@ -201,8 +201,7 @@ function hasEndpoints(device, endpoints) {
  */
 const scheduleToOctetStr = (data) => {
     return data.map((dayData) =>
-        dayData.reduce((sum, currentIntervalSetting, index) => sum + (Number(currentIntervalSetting) << index), 0)
-    );
+        dayData.reduce((sum, currentIntervalSetting, index) => sum + (Number(currentIntervalSetting) << index), 0));
 };
 
 /**

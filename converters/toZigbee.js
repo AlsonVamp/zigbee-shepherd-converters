@@ -2669,7 +2669,7 @@ const converters = {
             return {intervals: utils.bufferToTimeIntervals(readResponse.intervals),
                 intensity: readResponse.intensity,
                 schedule: utils.bufferToWeeklySchedule(readResponse.schedule)};
-            },
+        },
     },
     legrand_readActivePower: {
         key: ['power'],
@@ -3888,7 +3888,7 @@ const converters = {
         convertGet: async (entity, key, meta) => {
             await entity.read('genMultistateOutput', [0x200]);
         },
-    }, 
+    },
 
     // Not a converter, can be used by tests to clear the store.
     __clearStore__: () => {
