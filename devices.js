@@ -15825,7 +15825,6 @@ const devices = [
         fromZigbee: [fz.metering, fz.battery],
         toZigbee: [tz.ett_cnt],
         exposes: [],
-        meta: {configureKey: 1},
     },
     {
         zigbeeModel: ['ETT.CNT02E'],
@@ -15836,7 +15835,6 @@ const devices = [
         fromZigbee: [fz.metering, fz.battery],
         toZigbee: [tz.ett_cnt],
         exposes: [],
-        meta: {configureKey: 1},
     },
     {
         zigbeeModel: ['ETT.MV01'],
@@ -15846,10 +15844,6 @@ const devices = [
         exposes: [],
         fromZigbee: [fz.occupancy, fz.battery],
         toZigbee: [],
-        meta: {configureKey: 1},
-        configure: async (device, coordinatorEndpoint, logger) => {
-            await reporting.bind(device.getEndpoint(8), coordinatorEndpoint, ['msOccupancySensing']);
-        },
     },
     {
         zigbeeModel: ['ETT.SWA1'],
@@ -15872,10 +15866,6 @@ const devices = [
         exposes: [],
         fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [],
-        meta: {configureKey: 1},
-        configure: async (device, coordinatorEndpoint, logger) => {
-            await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff']);
-        },
     },
     {
         zigbeeModel: ['ETT.LK02G'],
@@ -15885,10 +15875,6 @@ const devices = [
         exposes: [],
         fromZigbee: [fz.on_off, fz.battery],
         toZigbee: [],
-        meta: {configureKey: 1},
-        configure: async (device, coordinatorEndpoint, logger) => {
-            await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['genOnOff', 'genPowerCfg']);
-        },
     },
     {
         zigbeeModel: ['ETT.BTN01'],
@@ -15939,10 +15925,6 @@ const devices = [
         exposes: [],
         fromZigbee: [fz.humidity, fz.temperature, fz.battery],
         toZigbee: [],
-        meta: {configureKey: 1},
-        configure: async (device, coordinatorEndpoint, logger) => {
-            await reporting.bind(device.getEndpoint(1), coordinatorEndpoint, ['msTemperatureMeasurement', 'msRelativeHumidity']);
-        },
     },
     {
         zigbeeModel: ['ETT.THS01'],
@@ -15954,11 +15936,6 @@ const devices = [
             fz.humidity, fz.temperature, fz.battery,
         ],
         toZigbee: [],
-        meta: {configureKey: 1},
-        configure: async (device, coordinatorEndpoint, logger) => {
-            await reporting.bind(device.getEndpoint(8), coordinatorEndpoint,
-                ['msTemperatureMeasurement', 'msRelativeHumidity']);
-        },
     },
     {
         zigbeeModel: ['ETT.IRTOSOTA1'],
