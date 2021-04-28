@@ -15961,6 +15961,17 @@ const devices = [
         },
     },
     {
+        zigbeeModel: ['ETT.IRTOSOTA1'],
+        model: 'ETT.IRTOSOTA1',
+        vendor: 'Ecotelecom-T',
+        description: 'Ir remote controle',
+        exposes: [],
+        supports: 'MultistateValue custom attr',
+        fromZigbee: [],
+        toZigbee: [tz.ett_irtosot_frame],
+        meta: {configureKey: 1},
+    },
+    {
         fingerprint: [{modelID: 'TS0601', manufacturerName: '_TZE200_s8gkrkxk'}],
         model: 'HG06467',
         vendor: 'Lidl',
