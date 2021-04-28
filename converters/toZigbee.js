@@ -3018,6 +3018,15 @@ const converters = {
             await entity.read('seMetering', ['currentSummDelivered', 'multiplier', 'divisor']);
         },
     },
+    ett_irtosot_frame: {
+        key: ['irFrame'],
+        convertSet: async (entity, key, value, meta) => {
+            await entity.write('genMultistateOutput', {0x200: {value: value, type: 0x41}});
+        },
+        convertGet: async (entity, key, meta) => {
+            await entity.read('genMultistateOutput', [0x200]);
+        },
+    },
     tint_scene: {
         key: ['tint_scene'],
         convertSet: async (entity, key, value, meta) => {
